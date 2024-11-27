@@ -5,29 +5,37 @@
 # Description: Implements a resizable array.
 
 class DynamicArray:
-    def __init__(self):
+    def __init__(self, initial_data=None):
         """
-        Initialize a new dynamic array
+        Initialize a new dynamic array.
+        If initial_data is provided, initialize the array with its elements.
         """
-        self._data = [None] * 4
-        self._size = 0
-        self._capacity = 4
+        if initial_data is None:
+            self._data = [None] * 4
+            self._size = 0
+            self._capacity = 4
+        else:
+            self._data = [None] * len(initial_data) * 2
+            for i, value in enumerate(initial_data):
+                self._data[i] = value
+            self._size = len(initial_data)
+            self._capacity = len(self._data)
 
     def __str__(self) -> str:
         """
-        Return the content of the dynamic array in a human-readable format
+        Return the content of the dynamic array in a human-readable format.
         """
         return f"DYN_ARR Size/Cap: {self._size}/{self._capacity} " + str([self._data[i] for i in range(self._size)])
 
     def length(self) -> int:
         """
-        Return the number of elements in the dynamic array
+        Return the number of elements in the dynamic array.
         """
         return self._size
 
     def append(self, value: object) -> None:
         """
-        Add an element to the end of the dynamic array
+        Add an element to the end of the dynamic array.
         """
         if self._size == self._capacity:
             self._resize(2 * self._capacity)
@@ -36,7 +44,7 @@ class DynamicArray:
 
     def get_at_index(self, index: int) -> object:
         """
-        Get the value at the given index
+        Get the value at the given index.
         """
         if index < 0 or index >= self._size:
             raise IndexError("Index out of bounds")
@@ -44,7 +52,7 @@ class DynamicArray:
 
     def set_at_index(self, index: int, value: object) -> None:
         """
-        Set the value at the given index
+        Set the value at the given index.
         """
         if index < 0 or index >= self._size:
             raise IndexError("Index out of bounds")
@@ -52,7 +60,7 @@ class DynamicArray:
 
     def pop(self) -> object:
         """
-        Remove the last element in the dynamic array and return it
+        Remove the last element in the dynamic array and return it.
         """
         if self._size == 0:
             raise IndexError("Array is empty")
@@ -63,7 +71,7 @@ class DynamicArray:
 
     def swap(self, index1: int, index2: int) -> None:
         """
-        Swap the elements at the given indices
+        Swap the elements at the given indices.
         """
         if index1 < 0 or index1 >= self._size or index2 < 0 or index2 >= self._size:
             raise IndexError("Index out of bounds")
@@ -71,7 +79,7 @@ class DynamicArray:
 
     def _resize(self, new_capacity: int) -> None:
         """
-        Resize the array to the new capacity
+        Resize the array to the new capacity.
         """
         new_data = [None] * new_capacity
         for i in range(self._size):
@@ -81,12 +89,12 @@ class DynamicArray:
 
     def __getitem__(self, index: int) -> object:
         """
-        Get the value at the given index using the bracket operator
+        Get the value at the given index using the bracket operator.
         """
         return self.get_at_index(index)
 
     def __setitem__(self, index: int, value: object) -> None:
         """
-        Set the value at the given index using the bracket operator
+        Set the value at the given index using the bracket operator.
         """
         self.set_at_index(index, value)
